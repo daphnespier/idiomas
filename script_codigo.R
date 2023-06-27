@@ -41,9 +41,11 @@ extrair_caracteristicas <- function(texto) {
   
   for (i in 1:length(texto)) {
     texto_atual <- texto[i]
+    texto_limpo <- gsub("[^[:alnum:][:space:]]", "", iconv(texto_atual, to = "ASCII//TRANSLIT"))
     freq_caracteres_seguidos_mp <- sum(str_detect(tolower(texto_atual), "mp"))
     freq_caracteres_seguidos_mb <- sum(str_detect(tolower(texto_atual), "mb"))
-    freq_caracteres_especiais <- str_count(texto_atual, "[^[:alnum:][:space:]]")
+    padrao <- "[áéíóúÁÉÍÓÚâêîôûÂÊÎÔÛàèìòùÀÈÌÒÙãõñÃÕÑäëïöüÄËÏÖÜÇç[:punct:]]"
+    freq_caracteres_especiais <- str_count(texto_atual, padrao)
     freq_pontuacao <- sum(str_count(texto_atual, "[[:punct:]]"))
     
     texto_limpo <- gsub("[^[:alnum:][:space:]]", "", iconv(texto_atual, to = "ASCII//TRANSLIT"))
@@ -158,9 +160,9 @@ print(recall)
 print(f1_score)
 
 # teste do modelo
-texto<-"Mi piace molto la cucina italiana, specialmente la pasta fresca e le deliziose pizze napoletane."
+texto<-"Mi madre camina por la playa"
 
 dados_texto <- extrair_caracteristicas(texto)
-dados_texto <- select(dados_texto, -texto)
+dados_texto
 idioma_previsto <- predict(modelo_svm, newdata = dados_texto)
 idioma_previsto

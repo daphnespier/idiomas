@@ -1,10 +1,3 @@
-library(shiny)
-library(stringr)
-library(tm)
-library(dplyr)
-library(e1071)
-library(DT)
-library(caret)
 
 require(pacman)
 pacman::p_load(stringr, tm, dplyr, e1071, shiny, caret, DT)
@@ -47,7 +40,9 @@ extrair_caracteristicas <- function(texto, selecionadas) {
     texto_atual <- texto[i]
     freq_caracteres_seguidos_mp <- sum(str_detect(tolower(texto_atual), "mp"))
     freq_caracteres_seguidos_mb <- sum(str_detect(tolower(texto_atual), "mb"))
-    freq_caracteres_especiais <- str_count(texto_atual, "[^[:alnum:][:space:]]")
+    #freq_caracteres_especiais <- str_count(texto_atual, "[^[:alnum:][:space:]]")
+    padrao <- "[áéíóúÁÉÍÓÚâêîôûÂÊÎÔÛàèìòùÀÈÌÒÙãõñÃÕÑäëïöüÄËÏÖÜÇç[:punct:]]"
+    freq_caracteres_especiais <- str_count(texto_atual, padrao)
     freq_pontuacao <- sum(str_count(texto_atual, "[[:punct:]]"))
     
     texto_limpo <- gsub("[^[:alnum:][:space:]]", "", iconv(texto_atual, to = "ASCII//TRANSLIT"))
@@ -162,7 +157,8 @@ ui <- fluidPage(
         tabPanel("Dados Treino/Teste", dataTableOutput("dadosTreinoTesteTable")),
         tabPanel("Métricas de avaliação", dataTableOutput("metricsTable")),
         tabPanel("Matriz de confusão", dataTableOutput("confusionMatrixTable")),
-        tabPanel("Classificação de texto", verbatimTextOutput("classificationResult"))
+        tabPanel("Classificação de texto", verbatimTextOutput("classificationResult"), dataTableOutput("caracTexto")),
+        tabPanel("Stopwords", dataTableOutput("stopw")),
       )
     )
   )
@@ -262,8 +258,15 @@ server <- function(input, output) {
   })
   
   # Classifica o texto inserido pelo usuário
-  classificacaoTexto <- eventReactive(input$trainButton, {
+  
+  caracTexto <- eventReactive(input$trainButton, {
     req(input$textInput, modeloSVM())
+    texto <- data.frame(texto = input$textInput)
+    extrair_caracteristicas(texto$texto, selecionadas = input$features)
+  })
+  
+  classificacaoTexto <- eventReactive(input$trainButton, {
+    req(input$textInput, modeloSVM(), caracTexto())
     texto <- data.frame(texto = input$textInput)
     caracteristicas <- extrair_caracteristicas(texto$texto, selecionadas = input$features)
     predict(modeloSVM(), newdata = caracteristicas)
@@ -273,6 +276,28 @@ server <- function(input, output) {
   output$classificationResult <- renderPrint({
     classificacaoTexto()
   })
+  
+  stopw <- reactive({
+    bind_rows(data.frame(Dados =  stopwords("fr"), NomeVetor = "francês"),
+    data.frame(Dados =  stopwords("en"), NomeVetor = "inglês"),
+    data.frame(Dados =  stopwords("de"), NomeVetor = "alemão"),
+    data.frame(Dados =  stopwords("it"), NomeVetor = "italiano"),
+    data.frame(Dados =  stopwords("es"), NomeVetor = "espanhol"),
+    data.frame(Dados =  stopwords("pt"), NomeVetor = "português"))
+  })
+  
+  # Renderiza a tabela com as características extraídas
+  output$caracTexto <- renderDataTable({
+    req(input$textInput, modeloSVM(), caracTexto())
+    texto <- data.frame(texto = input$textInput)
+    t(caracTexto())
+  })
+  
+  # Renderiza a tabela com as stopwords
+  output$stopw <- renderDataTable({
+    stopw()
+  })
+
 }
 
 # Roda o Shiny App
