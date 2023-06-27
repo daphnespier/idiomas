@@ -28,5 +28,5 @@
 
 [código em shiny - *app.R*](https://github.com/daphnespier/idiomas/blob/main/app.R)
 
-PS. Sempre selecione a característica *texto* (bug que vou corrigir depois) :P
+PS. Sempre selecione a característica **texto** (bug que vou corrigir depois) :P
 
