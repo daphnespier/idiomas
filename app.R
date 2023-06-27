@@ -1,3 +1,10 @@
+library(shiny)
+library(stringr)
+library(tm)
+library(dplyr)
+library(e1071)
+library(DT)
+library(caret)
 
 require(pacman)
 pacman::p_load(stringr, tm, dplyr, e1071, shiny, caret, DT)
@@ -165,9 +172,16 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   # Função para ler o arquivo CSV e atualizar os dados
+ 
+  
   dados <- reactive({
-    req(input$file)
-    read.csv2(input$file$datapath)
+    if (is.null(input$file)) {
+      # Lê a planilha "dados.csv" diretamente
+      read.csv2("dados.csv")
+    } else {
+      # Lê o arquivo carregado pelo usuário
+      read.csv2(input$file$datapath)
+    }
   })
   
   # Renderiza a tabela com os dados importados
@@ -177,7 +191,7 @@ server <- function(input, output) {
   
   # Extrai as características dos dados selecionados
   dadosCaracteristicas <- reactive({
-    req(input$file)
+    req(dados())
     req(input$features)
     carac<-extrair_caracteristicas(dados()$texto, selecionadas = input$features)
     cbind(carac, idioma = dados()$idioma)
@@ -190,7 +204,7 @@ server <- function(input, output) {
   
   # Divide os dados em treino e teste com a proporção selecionada
   dadosTreinoTeste <- reactive({
-    req(input$file)
+    req(dados())
     req(input$features)
     req(input$proportion)
     carac <- select(dadosCaracteristicas(), -texto)

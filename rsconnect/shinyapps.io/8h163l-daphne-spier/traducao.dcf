@@ -5,9 +5,9 @@ account: 8h163l-daphne-spier
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 9372722
-bundleId: 7393673
+bundleId: 7393972
 url: https://8h163l-daphne-spier.shinyapps.io/traducao/
-when: 1687876798.97294
-lastSyncTime: 1687876798.97295
+when: 1687880850.2871
+lastSyncTime: 1687880850.28711
 asMultiple: FALSE
 asStatic: FALSE
