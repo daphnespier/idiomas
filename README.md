@@ -21,3 +21,8 @@
 5) matriz de confusão
 6) classificação do novo texto e características extraídas dele
 7) listas de stopwords utilizadas
+
+
+[código em R - *script_codigo.R*](https://github.com/daphnespier/idiomas/blob/main/script_codigo.R)
+[código em shiny - *app.R*](https://github.com/daphnespier/idiomas/blob/main/app.R)
+
