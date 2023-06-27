@@ -4,7 +4,9 @@
 ## [Link do App](https://8h163l-daphne-spier.shinyapps.io/traducao/)
 
 **Objetivo:** classificação de textos em 6 idiomas: português, espanhol, italiano, alemão, francês e inglês. 
+
 **Modelo:** SVM (Support Vector Machine)
+
 **Dados fornecidos:** 30 textos para cada idioma
 
 **Funcionalidades:**
