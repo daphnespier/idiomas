@@ -154,7 +154,7 @@ ui <- fluidPage(
       tabsetPanel(
         tabPanel("Dados", dataTableOutput("dataTable")),
         tabPanel("Dados com características", dataTableOutput("featuresTable")),
-        tabPanel("Dados Treino/Teste", dataTableOutput("dadosTreinoTesteTable")),
+        tabPanel("Dados Treino", dataTableOutput("dadosTreinoTesteTable")),
         tabPanel("Métricas de avaliação", dataTableOutput("metricsTable")),
         tabPanel("Matriz de confusão", dataTableOutput("confusionMatrixTable")),
         tabPanel("Classificação de texto", verbatimTextOutput("classificationResult"), dataTableOutput("caracTexto")),

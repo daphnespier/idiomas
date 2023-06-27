@@ -5,10 +5,9 @@ account: 8h163l-daphne-spier
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 9372722
-bundleId: 7394782
+bundleId: 7394982
 url: https://8h163l-daphne-spier.shinyapps.io/traducao/
-when: 1687896446.11409
-lastSyncTime: 1687896446.1141
+when: 1687899981.28654
+lastSyncTime: 1687899981.28655
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: appnovo.R|normalizaçao.R
