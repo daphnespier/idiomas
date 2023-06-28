@@ -28,5 +28,6 @@
 
 [código em shiny - *app.R*](https://github.com/daphnespier/idiomas/blob/main/app.R)
 
-PS. Sempre selecione a característica **texto** (bug que vou corrigir depois) :P
+*PS1*. Sempre selecione a característica **texto** (bug que vou corrigir depois) :P
 
+*PS2*. as frequências de características foram substituídas por proporções. O app já foi atualizado e o novo código está [aqui - *script_codigo_proporcoes.R*](https://github.com/daphnespier/idiomas/blob/main/app.R)
