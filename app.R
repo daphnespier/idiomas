@@ -150,7 +150,7 @@ ui <- fluidPage(
     mainPanel(
       tabsetPanel(
         tabPanel("Dados", dataTableOutput("dataTable")),
-        tabPanel("Dados com características", dataTableOutput("featuresTable")),
+        tabPanel("Características_extraídas", dataTableOutput("featuresTable")),
         tabPanel("Dados Treino", dataTableOutput("dadosTreinoTesteTable")),
         tabPanel("Métricas de avaliação", dataTableOutput("metricsTable")),
         tabPanel("Matriz de confusão", dataTableOutput("confusionMatrixTable")),
@@ -275,12 +275,12 @@ server <- function(input, output) {
   })
   
   stopw <- reactive({
-    bind_rows(data.frame(Dados =  stopwords("fr"), NomeVetor = "francês"),
-    data.frame(Dados =  stopwords("en"), NomeVetor = "inglês"),
-    data.frame(Dados =  stopwords("de"), NomeVetor = "alemão"),
-    data.frame(Dados =  stopwords("it"), NomeVetor = "italiano"),
-    data.frame(Dados =  stopwords("es"), NomeVetor = "espanhol"),
-    data.frame(Dados =  stopwords("pt"), NomeVetor = "português"))
+    bind_rows(data.frame(Stopwords =  stopwords("fr"), Idioma = "francês"),
+    data.frame(Stopwords =  stopwords("en"), Idioma = "inglês"),
+    data.frame(Stopwords =  stopwords("de"), Idioma = "alemão"),
+    data.frame(Stopwords =  stopwords("it"), Idioma = "italiano"),
+    data.frame(Stopwords =  stopwords("es"), Idioma = "espanhol"),
+    data.frame(Stopwords =  stopwords("pt"), Idioma = "português"))
   })
   
   # Renderiza a tabela com as características extraídas
